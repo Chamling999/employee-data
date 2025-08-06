@@ -13,6 +13,7 @@ engine = create_engine(DATABASE_URL, connect_args={"check_same_thread": False})
 SessionLocal = sessionmaker(bind=engine, autocommit=False, autoflush=False)
 Base = declarative_base()
 
+
 # ---------------------------
 # SQLAlchemy Employee Model
 # ---------------------------
@@ -23,8 +24,10 @@ class Employee(Base):
     age = Column(Integer, nullable=False)
     department = Column(String, nullable=False)
 
+
 # Create the table
 Base.metadata.create_all(bind=engine)
+
 
 # ---------------------------
 # Pydantic Schemas
@@ -34,10 +37,12 @@ class EmployeeCreate(BaseModel):
     age: int
     department: str
 
+
 class EmployeeUpdate(BaseModel):
     name: str
     age: int
     department: str
+
 
 # ---------------------------
 # FastAPI App
@@ -47,6 +52,7 @@ app = FastAPI(title="Employee Data Management API")
 # ---------------------------
 # CRUD Routes
 # ---------------------------
+
 
 # Create a new employee
 @app.post("/employees/", response_model=dict)
@@ -63,17 +69,23 @@ def create_employee(employee: EmployeeCreate):
             "id": new_emp.id,
             "name": new_emp.name,
             "age": new_emp.age,
-            "department": new_emp.department
-        }
+            "department": new_emp.department,
+        },
     }
+
 
 # Read all employees
 @app.get("/employees/", response_model=list)
 def read_employees():
     db = SessionLocal()
     employees = db.query(Employee).all()
+    result = [
+        {"id": emp.id, "name": emp.name, "age": emp.age, "department": emp.department}
+        for emp in employees
+    ]
     db.close()
-    return employees
+    return result
+
 
 # Read a specific employee
 @app.get("/employees/{employee_id}", response_model=dict)
@@ -87,8 +99,9 @@ def read_employee(employee_id: int):
         "id": emp.id,
         "name": emp.name,
         "age": emp.age,
-        "department": emp.department
+        "department": emp.department,
     }
+
 
 # Update an existing employee
 @app.put("/employees/{employee_id}", response_model=dict)
@@ -109,9 +122,10 @@ def update_employee(employee_id: int, updated: EmployeeUpdate):
             "id": emp.id,
             "name": emp.name,
             "age": emp.age,
-            "department": emp.department
-        }
+            "department": emp.department,
+        },
     }
+
 
 # Delete an employee
 @app.delete("/employees/{employee_id}", response_model=dict)
