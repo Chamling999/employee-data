@@ -1,49 +1,5 @@
 # Employee Data Management API
 
-This project is a simple Employee Data Management REST API built with **FastAPI**, **SQLAlchemy**, and **SQLite**. It allows you to create, read, update, and delete (CRUD) employee records.
-## Features
-
-- Add new employees
-- View all employees
-- View a specific employee by ID
-- Update employee details
-- Delete employees
-
-## Tech Stack
-- Python 3.7+
-- FastAPI
-- SQLAlchemy
-- SQLite (local file database)
-- Pydantic
-
-## Getting Started
-### 1. Clone the Repository
-
-```sh
-git clone <your-repo-url>
-cd employee-data
-```
-### 2. Create a Virtual Environment (Recommended)
-
-```sh
-python -m venv venv
-venv\Scripts\activate  # On Windows
-# source venv/bin/activate  # On Linux/Mac
-```
-### 3. Install Dependencies
-
-```sh
-pip install fastapi uvicorn sqlalchemy pydantic
-```
-### 4. Run the API Server
-
-```sh
-uvicorn EmployeeData:app --reload
-```
-The API will be available at: [http://127.0.0.1:8000](http://127.0.0.1:8000)
-
-# Employee Data Management API
-
 This project is a RESTful API for managing employee records, built with **FastAPI**, **SQLAlchemy**, and **SQLite**. It supports creating, reading, updating, and deleting employee data.
 
 ## Features
